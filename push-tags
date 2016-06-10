@@ -1,6 +1,12 @@
 #!/usr/bin/env php
 <?php
 
+if (empty($GLOBALS['argv']['1'])) {
+  throw new Exception("Invalid branch name");
+}
+
+list($major, $minor) = explode('.', $GLOBALS['argv']['1']);
+
 define('UPSTREAM_REPOSITORY', 'https://git.drupal.org/project/drupal.git');
 define('UPSTREAM_DIRECTORY', 'upstream');
 define('DOWNSTREAM_REPOSITORY', exec('git config --get remote.origin.url'));
@@ -18,10 +24,10 @@ $blacklist = array(
   '8.0.0-beta5',
 );
 
-function filter_valid_tags($upstream_tags, $blacklist) {
+function filter_valid_tags($upstream_tags, $blacklist, $major, $minor) {
   $tags = array();
   foreach ($upstream_tags as $tag) {
-    preg_match('/refs\/tags\/(8\.[0-9]+\.[0-9]+[^\^\{}\n]*)/', $tag, $value);
+    preg_match('/refs\/tags\/(' . $major . '\.' . $minor . '\.[0-9]+[^\^\{}\n]*)/', $tag, $value);
     if (isset($value[1]) && !in_array($value[1], $blacklist)) {
       $tags[] = $value[1];
     }
@@ -29,8 +35,8 @@ function filter_valid_tags($upstream_tags, $blacklist) {
   return array_unique($tags);
 }
 
-$upstream_tags = filter_valid_tags($upstream_tags, $blacklist);
-$downstream_tags = filter_valid_tags($downstream_tags, $blacklist);
+$upstream_tags = filter_valid_tags($upstream_tags, $blacklist, $major, $minor);
+$downstream_tags = filter_valid_tags($downstream_tags, $blacklist, $major, $minor);
 
 // Tags thats are not in the downstream repo.
 $tags = array_diff($upstream_tags, $downstream_tags);
