@@ -39,4 +39,3 @@ passthru('./subtree-split fetch');
 foreach ($tags as $tag) {
   passthru('./subtree-split push tag ' . escapeshellarg($tag));
 }
-
