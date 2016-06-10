@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-define('UPSTREAM_REPOSITORY', 'http://git.drupal.org/project/drupal.git');
+define('UPSTREAM_REPOSITORY', 'https://git.drupal.org/project/drupal.git');
 define('UPSTREAM_DIRECTORY', 'upstream');
 define('DOWNSTREAM_REPOSITORY', exec('git config --get remote.origin.url'));
 

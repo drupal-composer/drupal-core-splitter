@@ -1,6 +1,6 @@
 #! /bin/bash
 
-UPSTREAM_REPOSITORY=http://git.drupal.org/project/drupal.git
+UPSTREAM_REPOSITORY=https://git.drupal.org/project/drupal.git
 UPSTREAM_DIRECTORY=upstream
 DOWNSTREAM_REPOSITORY=$(git config --get remote.origin.url)
 
