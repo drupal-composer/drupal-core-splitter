@@ -1,6 +1,6 @@
 #! /bin/bash
 
-UPSTREAM_REPOSITORY=https://github.com/drupal/drupal
+UPSTREAM_REPOSITORY=http://git.drupal.org/project/drupal.git
 UPSTREAM_DIRECTORY=upstream
 DOWNSTREAM_REPOSITORY=$(git config --get remote.origin.url)
 
@@ -41,6 +41,8 @@ fetch() {
   else
     cd $UPSTREAM_DIRECTORY
     git fetch
+    git prune
+    git gc
     cd ..
   fi
 }
@@ -71,8 +73,7 @@ push_branch() {
   git branch -D subtree-core-$1
 
   # The subtree-cache seems to build up over time, so clear it.
-  rm -r .git/subtree-cache/*
-
+  # rm -r .git/subtree-cache/*
   cd ..
 }
 
