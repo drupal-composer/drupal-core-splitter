@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+use DrupalCoreSplit\AppConfig;
+use Webmozart\Console\ConsoleApplication;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$cli = new ConsoleApplication(new AppConfig());
+$cli->run();

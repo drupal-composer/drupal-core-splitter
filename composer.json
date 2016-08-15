@@ -1,5 +1,13 @@
 {
-    "name": "drupal/core",
+    "name": "drupal/core-splitter",
     "description": "Drupal is an open source content management platform powering millions of websites and applications.",
-    "license": "GPL-2.0+"
+    "license": "GPL-2.0+",
+    "require": {
+        "webmozart/console": "~1.0@beta"
+    },
+    "autoload": {
+        "psr-4": {
+            "DrupalCoreSplit\\": "src/"
+        }
+    }
 }

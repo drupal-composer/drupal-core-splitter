@@ -11,7 +11,7 @@ function update_subtree_split {
   git clean -fd
   cd $BASEDIR
   ./subtree-split push branch $1
-  ./push-tags $1
+  ./console push-tags-legacy $1
   rm -rf ./upstream/.git/subtree-cache
 }
 

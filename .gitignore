@@ -3,3 +3,7 @@ subtree-split.config
 
 # Ignore the upstream repository
 upstream
+upstream-current
+
+# Composer
+vendor
