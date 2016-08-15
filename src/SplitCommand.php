@@ -19,6 +19,9 @@ class SplitCommand {
   public function handle(Args $args, IO $io) {
     $directory = 'upstream-current';
 
+    // Update local repository.
+    $this->updateRepository($directory);
+
     // Update branch
     $this->splitBranch($directory, $args->getArgument('branch'));
 
@@ -36,14 +39,20 @@ class SplitCommand {
     });
   }
 
+  protected function updateRepository($directory) {
+    if (!file_exists($directory)) {
+      passthru("git clone {$this->upstream} {$directory}");
+    }
+    passthru("cd {$directory} && git remote set-url origin {$this->upstream} && git fetch origin && git fetch -t origin ");
+  }
+
   protected function splitBranch($directory, $ref) {
-    passthru("cd {$directory} && git fetch origin && git checkout {$ref} && git reset --hard origin/{$ref}");
+    passthru("cd {$directory} && git checkout --force {$ref} && git reset --hard origin/{$ref}");
     passthru("./splitsh-lite --progress --prefix=core/ --origin=origin/{$ref} --path={$directory} --target=HEAD");
     passthru("cd {$directory} && git push {$this->downstream} HEAD:{$ref}");
   }
 
   protected function splitTag($directory, $ref) {
-    passthru("cd {$directory} && git fetch origin && git fetch -t origin");
     passthru("./splitsh-lite --progress --prefix=core/ --origin=tags/{$ref} --path={$directory} --target=HEAD");
     passthru("cd {$directory} && git tag -f {$ref} HEAD && git push {$this->downstream} {$ref}");
   }
