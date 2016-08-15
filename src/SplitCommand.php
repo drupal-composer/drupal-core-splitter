@@ -14,7 +14,7 @@ class SplitCommand {
 
   protected $upstream = 'https://git.drupal.org/project/drupal.git';
 
-  protected $downstream = 'https://github.com/webflo/core2.git';
+  protected $downstream = 'https://github.com/drupal-composer/drupal-core.git';
 
   public function handle(Args $args, IO $io) {
     $directory = 'upstream-current';
